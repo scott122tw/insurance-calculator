@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>法定保險需求計算器</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; padding: 20px; }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; }
+        button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>法定保險需求計算器</h1>
+    <input type="number" id="age" placeholder="輸入年齡">
+    <input type="number" id="annualIncome" placeholder="輸入年收入 (NT$)">
+    <input type="number" id="dependents" placeholder="輸入家庭成員數">
+    <button onclick="calculateInsurance()">計算</button>
+    <p id="result"></p>
+
+    <script>
+        function calculateInsurance() {
+            const age = Number(document.getElementById('age').value);
+            const annualIncome = Number(document.getElementById('annualIncome').value);
+            const dependents = Number(document.getElementById('dependents').value);
+
+            const baseAmount = annualIncome * 10;
+            const ageFactor = Math.max(1, (65 - age) / 65);
+            const dependentFactor = 1 + (dependents * 0.1);
+            
+            const insuranceNeed = baseAmount * ageFactor * dependentFactor;
+            const result = Math.round(insuranceNeed * 100) / 100;
+
+            document.getElementById('result').innerText = `建議的法定保險金額: NT$ ${result.toLocaleString()}`;
+        }
+    </script>
+</body>
+</html>
